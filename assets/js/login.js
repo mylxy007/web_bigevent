@@ -41,10 +41,11 @@ $(function () {
         // 2.发起一个ajax请求
         $.ajax({
             type: 'post',
-            url: '/api/reguser',
+            url: '/api/reg',
             data: {
                 username: username,
-                password: password
+                password: password,
+                repassword: password
             },
             success: res => {
                 if (res.status !== 0) {
@@ -63,15 +64,18 @@ $(function () {
             type: 'post',
             url: '/api/login',
             data: $(this).serialize(),
-            success: res => {
-                if (res.status !== 0) {
+            success: function (res) {
+                if (res.code !== 0) {
                     return layer.msg(res.message);
                 }
                 layer.msg('登录成功！');
+                console.log(res.code);
                 //本地保存登录成功后的token值
                 localStorage.setItem('token', res.token);
-                //跳转到后台主页
-                location.href = '../../index.html';
+                //跳转到后台主页4
+
+                location.href = '/index.html';
+
             }
         })
     })
